@@ -43,6 +43,15 @@ public class VehicleRoute {
 		return new VehicleRoute(route);
 	}
 	
+	/**
+	 * @deprecated use VehicleRoute.Builder instead.
+	 * 
+	 * @param tour
+	 * @param driver
+	 * @param vehicle
+	 * @return
+	 */
+	@Deprecated
 	public static VehicleRoute newInstance(TourActivities tour, Driver driver, Vehicle vehicle) {
 		return new VehicleRoute(tour,driver,vehicle);
 	}
@@ -233,7 +242,7 @@ public class VehicleRoute {
 		this.tourActivities = tour;
 		this.vehicle = vehicle;
 		this.driver = driver;
-		setStartAndEnd(vehicle, vehicle.getEarliestDeparture());
+		iniStartAndEnd(vehicle, vehicle.getEarliestDeparture());
 	}
 	
 	
@@ -277,10 +286,11 @@ public class VehicleRoute {
 
 	public void setVehicle(Vehicle vehicle, double vehicleDepTime){
 		this.vehicle = vehicle;
-		setStartAndEnd(vehicle, vehicleDepTime);
+		iniStartAndEnd(vehicle, vehicleDepTime);
+		setDepartureTime(vehicleDepTime);
 	}
 	
-	private void setStartAndEnd(Vehicle vehicle, double vehicleDepTime) {
+	private void iniStartAndEnd(Vehicle vehicle, double vehicleDepTime) {
 		if(!(vehicle instanceof NoVehicle)){
 			if(start == null && end == null){
 				start = Start.newInstance(vehicle.getLocationId(), vehicle.getEarliestDeparture(), vehicle.getLatestArrival());
@@ -294,7 +304,9 @@ public class VehicleRoute {
 			end.setTheoreticalEarliestOperationStartTime(vehicle.getEarliestDeparture());
 			end.setTheoreticalLatestOperationStartTime(vehicle.getLatestArrival());
 		}
-		
+		else{
+			
+		}
 	}
 
 	public void setDepartureTime(double vehicleDepTime){
