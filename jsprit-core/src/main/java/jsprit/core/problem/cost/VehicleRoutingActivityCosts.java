@@ -30,6 +30,7 @@ import jsprit.core.problem.vehicle.Vehicle;
  */
 public interface VehicleRoutingActivityCosts {
 	
+	@Deprecated
 	public static class Time {
 		
 		public static double TOUREND = -2.0;
