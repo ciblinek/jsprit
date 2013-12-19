@@ -16,11 +16,12 @@
  ******************************************************************************/
 package jsprit.core.problem.solution.route.activity;
 
-import jsprit.core.util.Coordinate;
 
 public final class Start implements TourActivity {
 
 	public final static String ACTIVITY_NAME = "start";
+	
+	public final static String NO_LOCATION = "no-location";
 	
 	public static int creation;
 	
@@ -29,16 +30,17 @@ public final class Start implements TourActivity {
 		return new Start(locationId,theoreticalStart,theoreticalEnd);
 	}
 	
+	public static Start newInstance(){
+		creation++;
+		return new Start(NO_LOCATION, Time.UNDEFINED, Time.UNDEFINED);
+	}
+	
 	public static Start copyOf(Start start){
 		return new Start(start);
 	}
 	
 	private String locationId;
-	
-	
-	
-	private Coordinate coordinate;
-	
+
 	private double theoretical_earliestOperationStartTime;
 	
 	private double theoretical_latestOperationStartTime;
@@ -47,13 +49,20 @@ public final class Start implements TourActivity {
 
 	private double arrTime;
 
+	/**
+	 * @deprecated use Start.newInstance(...) instead
+	 * 
+	 * @param locationId
+	 * @param theoreticalStart
+	 * @param theoreticalEnd
+	 */
+	@Deprecated
 	public Start(String locationId, double theoreticalStart, double theoreticalEnd) {
 		super();
 		this.locationId = locationId;
 		this.theoretical_earliestOperationStartTime = theoreticalStart;
 		this.theoretical_latestOperationStartTime = theoreticalEnd;
 		this.endTime = theoreticalStart;
-		
 	}
 
 	private Start(Start start) {
@@ -61,16 +70,6 @@ public final class Start implements TourActivity {
 		theoretical_earliestOperationStartTime = start.getTheoreticalEarliestOperationStartTime();
 		theoretical_latestOperationStartTime = start.getTheoreticalLatestOperationStartTime();
 		endTime = start.getEndTime();
-	}
-	
-	
-
-	Coordinate getCoordinate() {
-		return coordinate;
-	}
-
-	void setCoordinate(Coordinate coordinate) {
-		this.coordinate = coordinate;
 	}
 
 	public double getTheoreticalEarliestOperationStartTime() {
